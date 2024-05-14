@@ -1,5 +1,7 @@
+using _1.API.Mapper;
 using _2._Domain;
 using _3._Data;
+using _1.API.Mapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,8 +13,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-builder.Services.AddScoped<ITutorialDomain, TutorialDomain>();
+//dependecy inyection
 builder.Services.AddScoped<ITutorialData, TutorialOracleData>();
+builder.Services.AddScoped<ITutorialDomain, TutorialDomain>();
+
+
+builder.Services.AddAutoMapper(typeof(RequestToModel),typeof(ModelToRequest));
+
 
 var app = builder.Build();
 

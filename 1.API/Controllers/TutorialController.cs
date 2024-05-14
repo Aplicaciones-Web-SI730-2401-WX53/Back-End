@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using _1.API.Request;
 using _2._Domain;
 using _3._Data;
 using _3._Data.Models;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,13 +16,15 @@ namespace _1.API.Controllers
     [ApiController]
     public class TutorialController : ControllerBase
     {
-        private ITutorialData _tutorialData;
-        private ITutorialDomain _tutorialDomain;
+        private readonly ITutorialData _tutorialData;
+        private readonly ITutorialDomain _tutorialDomain;
+        private readonly IMapper _mapper;
         
-        public TutorialController(ITutorialData tutorialData,TutorialDomain tutorialDomain)
+        public TutorialController(ITutorialData tutorialData,ITutorialDomain tutorialDomain,IMapper mapper)
         {
             _tutorialData = tutorialData;
             _tutorialDomain = tutorialDomain;
+            _mapper = mapper;
         }
         
         // GET: api/Tutorial
@@ -40,9 +44,17 @@ namespace _1.API.Controllers
 
         // POST: api/Tutorial
         [HttpPost]
-        public Boolean Post([FromBody] Tutorial  data)
+        public Boolean Post([FromBody] TutorialRequest  data)
         {
-           return _tutorialDomain.Save(data);
+           /* var tutorial = new Tutorial()
+            {
+                Name = data.Name,
+                Description = data.Description
+            };*/
+
+           var tutorial = _mapper.Map<TutorialRequest, Tutorial>(data);
+           
+           return _tutorialDomain.Save(tutorial);
         }
 
         // PUT: api/Tutorial/5

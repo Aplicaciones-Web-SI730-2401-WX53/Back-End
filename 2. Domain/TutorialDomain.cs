@@ -12,8 +12,8 @@ public class TutorialDomain : ITutorialDomain
     }
     public bool Save(Tutorial data)
     {
-        if (data.Name.Contains('a'))
-            throw new Exception("Contains a");
+        //if (data.Name.Contains('a'))
+        //    throw new Exception("Contains a");
 
         return true;
     }
