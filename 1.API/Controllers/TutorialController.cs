@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using _1.API.Request;
+using _1.API.Response;
 using _2._Domain;
 using _3._Data;
 using _3._Data.Models;
@@ -29,17 +30,23 @@ namespace _1.API.Controllers
         
         // GET: api/Tutorial
         [HttpGet]
-        public List<Tutorial> Get()
+        public IActionResult Get()
         {
             //TutorialOracleData tutorialMySqlData = new TutorialOracleData();
-            return _tutorialData.getAll();
+            
+            
+            var data = _tutorialData.getAll();
+            var result = _mapper.Map<List<Tutorial>,List<TutorialResponse>>(data);
+            return Ok(result);
         }
 
         // GET: api/Tutorial/5
         [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-            return "value";
+            var data = _tutorialData.getById(id);
+            var result = _mapper.Map<Tutorial,TutorialResponse>(data);
+            return Ok(result);
         }
 
         // POST: api/Tutorial

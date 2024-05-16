@@ -16,10 +16,12 @@ builder.Services.AddSwaggerGen();
 
 
 //dependecy inyection
-builder.Services.AddScoped<ITutorialData, TutorialOracleData>();
+builder.Services.AddScoped<ITutorialData, TutorialMySqlData>();
 builder.Services.AddScoped<ITutorialDomain, TutorialDomain>();
 
-builder.Services.AddAutoMapper(typeof(RequestToModel),typeof(ModelToRequest));
+builder.Services.AddAutoMapper(typeof(RequestToModel)
+    ,typeof(ModelToRequest)
+    ,typeof(ModelToResponse));
 
 
 // Connect DB

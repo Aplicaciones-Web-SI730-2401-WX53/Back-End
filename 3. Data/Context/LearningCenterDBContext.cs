@@ -37,6 +37,7 @@ public class LearningCenterDBContext : DbContext
         builder.Entity<Tutorial>().HasKey(t => t.Id);
         builder.Entity<Tutorial>().Property(t => t.Name).IsRequired();
         builder.Entity<Tutorial>().Property(t => t.Name).HasMaxLength(10);
+       
 
         
         builder.Entity<Section>().ToTable("Section");
