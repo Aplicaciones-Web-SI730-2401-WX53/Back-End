@@ -19,7 +19,7 @@ public class TutorialOracleData :ITutorialData
         throw new NotImplementedException();
     }
 
-    public List<Tutorial> getAll()
+    public Task<List<Tutorial>> getAllAsync()
     {
         var list = new List<Tutorial>();
         
@@ -27,10 +27,10 @@ public class TutorialOracleData :ITutorialData
         list.Add(new Tutorial(){Name = "Tutrial 2 ORacle"});
         list.Add(new Tutorial(){Name = "Tutrial 3 ORacle"});
 
-        return list;
+        return null;
     }
 
-    public Tutorial getById(int Id)
+    public Task<Tutorial> GetByIdAsync(int Id)
     {
         throw new NotImplementedException();
     }

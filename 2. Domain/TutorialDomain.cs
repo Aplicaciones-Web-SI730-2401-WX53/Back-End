@@ -10,18 +10,20 @@ public class TutorialDomain : ITutorialDomain
     {
         _tutorialData = tutorialData;
     }
-    public bool Save(Tutorial data)
+    public async Task<Boolean> SaveAsync(Tutorial data)
     {
         //if (data.Name.Contains('a'))
         //    throw new Exception("Contains a");
-
-        return true;
+        
+        //Bussiness rules
+        return await _tutorialData.SaveAsync(data);
     }
 
-    public bool Update(Tutorial data)
+    public async Task<Boolean> UpdateAsync(Tutorial data,int id)
     {
-        //TutorialMySqlData tutorialMySqlData = new TutorialMySqlData();
-        return _tutorialData.Save(data);
+        
+        //Bussiness rules
+        return  await _tutorialData.UpdateAsync(data,id);
     }
 
     public bool Delete(int id)

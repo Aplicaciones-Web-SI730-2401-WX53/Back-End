@@ -1,12 +1,13 @@
+using System.Runtime.InteropServices.JavaScript;
 using _3._Data.Models;
 
 namespace _3._Data;
 
 public interface ITutorialData
 {
-    Boolean Save(Tutorial data);
-    Boolean Update(Tutorial data);
+    Task<Boolean> SaveAsync(Tutorial data);
+    Task<Boolean> UpdateAsync(Tutorial data,int id);
     Boolean Delete(int id);
-    List<Tutorial> getAll();
-    Tutorial getById(int Id);
+    Task<List<Tutorial>> getAllAsync();
+    Task<Tutorial> GetByIdAsync(int Id);
 }

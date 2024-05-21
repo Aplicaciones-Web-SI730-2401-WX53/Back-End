@@ -14,5 +14,7 @@ public class BaseModel
     [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
     public DateTime CreatedDate  { get; set; }
     public DateTime? UpdatedDate  { get; set; }
+    
+    [DefaultValue(true)]
     public Boolean IsActive  { get; set; }
 }
