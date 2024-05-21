@@ -58,11 +58,22 @@ namespace _1.API.Controllers
                 Description = data.Description
             };*/
 
-           var tutorial = _mapper.Map<TutorialRequest, Tutorial>(data);
-           
-           var result = await _tutorialDomain.SaveAsync(tutorial);
+           try
+           {
 
-           return Ok(result);
+               var tutorial = _mapper.Map<TutorialRequest, Tutorial>(data);
+
+               var result = await _tutorialDomain.SaveAsync(tutorial);
+
+               return Ok(result);
+           }
+           catch (Exception ex)
+           {
+               //ex // detalle técnico 
+               //loggear txt,base,cloud 
+
+               return StatusCode(StatusCodes.Status500InternalServerError,ex.Message);
+           }
         }
 
         // PUT: api/Tutorial/5
@@ -78,8 +89,11 @@ namespace _1.API.Controllers
 
         // DELETE: api/Tutorial/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
+           await _tutorialDomain.DeleteAsync(id);
+
+           return Ok();
         }
     }
 }

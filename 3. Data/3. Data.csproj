@@ -18,4 +18,8 @@
       <Compile Remove="TutorialOracleData.cs" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\4. Shared\4. Shared.csproj" />
+    </ItemGroup>
+
 </Project>

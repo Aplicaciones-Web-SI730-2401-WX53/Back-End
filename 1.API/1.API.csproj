@@ -20,6 +20,7 @@
     <ItemGroup>
       <ProjectReference Include="..\2. Domain\2. Domain.csproj" />
       <ProjectReference Include="..\3. Data\3. Data.csproj" />
+      <ProjectReference Include="..\4. Shared\4. Shared.csproj" />
     </ItemGroup>
 
     <ItemGroup>

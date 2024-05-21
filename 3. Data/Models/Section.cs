@@ -9,4 +9,7 @@ public class Section :BaseModel
     [Required]
     [MaxLength(90)]
     public string Name {get;set; }
+    
+    public int TutorialId { get; set; }
+    public Tutorial Tutorial { get; set; }
 }

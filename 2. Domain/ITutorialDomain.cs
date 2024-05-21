@@ -7,5 +7,5 @@ public interface ITutorialDomain
 {
     Task<Boolean> SaveAsync(Tutorial data);
     Task<Boolean> UpdateAsync(Tutorial data,int id);
-    Boolean Delete(int id);
+    Task<Boolean> DeleteAsync(int id);
 }

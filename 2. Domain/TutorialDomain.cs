@@ -1,5 +1,6 @@
 using _3._Data;
 using _3._Data.Models;
+using _4._Shared;
 
 namespace _2._Domain;
 
@@ -16,18 +17,31 @@ public class TutorialDomain : ITutorialDomain
         //    throw new Exception("Contains a");
         
         //Bussiness rules
+        var TutuorialExts = await _tutorialData.GetByNameAsync(data.Name);
+        if (TutuorialExts != null)
+            throw new Exception("Name already registered");
+        
+        var allTutorials = await _tutorialData.getAllAsync();
+        if (allTutorials.Count() >= CONSTANTS.MAX_TUTORIALS)
+            throw new Exception("limited achived");
+        
         return await _tutorialData.SaveAsync(data);
     }
 
     public async Task<Boolean> UpdateAsync(Tutorial data,int id)
     {
+        var TutuorialExts = await _tutorialData.GetByIdAsync(id);
+
+       /* if (TutuorialExts.Description != data.Description)
+            throw new Exception("Update description is not allowed");*/
         
         //Bussiness rules
         return  await _tutorialData.UpdateAsync(data,id);
     }
 
-    public bool Delete(int id)
+    public  async Task<Boolean> DeleteAsync(int id)
     {
-        throw new NotImplementedException();
+        //Bussiness rules
+        return await _tutorialData.DeleteAsync(id);
     }
 }

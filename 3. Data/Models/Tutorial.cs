@@ -6,6 +6,6 @@ public class Tutorial : BaseModel
     public string Description { get; set; }
     public Boolean IsDeleted { get; set; }
 
-    private List<Section> Sections { get; set; } //0 to  many
+    public List<Section> Sections { get; set; } //0 to  many
     //private Section Sections { get; set; } // 1 - 1
 }
