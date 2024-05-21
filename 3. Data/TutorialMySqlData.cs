@@ -9,41 +9,37 @@ namespace _3._Data;
 public class TutorialMySqlData :ITutorialData
 {
     private LearningCenterDBContext _learningCenterDbContext;
-    private IExecutionStrategy _executionStrategy;
     public TutorialMySqlData(LearningCenterDBContext learningCenterDbContext)
     {
         _learningCenterDbContext = learningCenterDbContext;
-        _executionStrategy = _learningCenterDbContext.Database.CreateExecutionStrategy();
     }
     public async Task<Boolean> SaveAsync(Tutorial data)
     {
         data.IsActive = true;
-        await _executionStrategy.ExecuteAsync(async () =>
+    
+        using (var transaction = await _learningCenterDbContext.Database.BeginTransactionAsync())
         {
-            using (var transaction = await _learningCenterDbContext.Database.BeginTransactionAsync())
+            try
             {
-                try
-                {
-                    _learningCenterDbContext.Tutorials.Add(data);
-                    _learningCenterDbContext.Sections.AddRange(data.Sections); /// BBDD cae
-                    await _learningCenterDbContext.SaveChangesAsync();
-                    await transaction.CommitAsync();
-                }
-                catch (Exception ex)
-                {
-                    await transaction.RollbackAsync();
-                    throw;
-                }
+                _learningCenterDbContext.Tutorials.Add(data);
+                _learningCenterDbContext.Sections.AddRange(data.Sections); /// BBDD cae
+                await _learningCenterDbContext.SaveChangesAsync();
+                await transaction.CommitAsync();
             }
-        });
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
+        }
+   
 
         return true;
     }
 
     public async Task<Boolean> UpdateAsync(Tutorial data,int id)
     {
-        await _executionStrategy.ExecuteAsync(async () =>
-        {
+
             using (var transaction = await _learningCenterDbContext.Database.BeginTransactionAsync())
             {
                 var tutorialTpUpdate = _learningCenterDbContext.Tutorials.Where(t => t.Id == id).FirstOrDefault();
@@ -54,15 +50,14 @@ public class TutorialMySqlData :ITutorialData
                 await _learningCenterDbContext.SaveChangesAsync(); // confirmar cambios
                 await transaction.CommitAsync();
             }
-        });
+
         return true;
         
     }
 
     public async Task<Boolean> DeleteAsync(int id)
     {
-        await _executionStrategy.ExecuteAsync(async () =>
-        {
+
             using (var transaction = await _learningCenterDbContext.Database.BeginTransactionAsync())
             {
                 var tutorialToDelete = _learningCenterDbContext.Tutorials.Where(t => t.Id == id).FirstOrDefault();
@@ -74,7 +69,7 @@ public class TutorialMySqlData :ITutorialData
                 await _learningCenterDbContext.SaveChangesAsync();
                 await transaction.CommitAsync();
             }
-        });
+
         
         return true;
     }

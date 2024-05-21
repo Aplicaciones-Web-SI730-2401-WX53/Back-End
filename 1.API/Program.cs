@@ -31,11 +31,7 @@ builder.Services.AddDbContext<LearningCenterDBContext>(
     dbContextOptions =>
     {
         dbContextOptions.UseMySql(connectionString,
-            ServerVersion.AutoDetect(connectionString),
-            options => options.EnableRetryOnFailure(
-                maxRetryCount: 5,
-                maxRetryDelay: System.TimeSpan.FromSeconds(30),
-                errorNumbersToAdd: null)
+            ServerVersion.AutoDetect(connectionString)
         );
     });
 
