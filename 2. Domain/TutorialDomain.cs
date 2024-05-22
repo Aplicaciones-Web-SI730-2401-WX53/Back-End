@@ -11,14 +11,11 @@ public class TutorialDomain : ITutorialDomain
     {
         _tutorialData = tutorialData;
     }
-    public async Task<Boolean> SaveAsync(Tutorial data)
+    public async Task<int> SaveAsync(Tutorial data)
     {
-        //if (data.Name.Contains('a'))
-        //    throw new Exception("Contains a");
-        
         //Bussiness rules
-        var TutuorialExts = await _tutorialData.GetByNameAsync(data.Name);
-        if (TutuorialExts != null)
+        var existingTutorial = await _tutorialData.GetByNameAsync(data.Name);
+        if (existingTutorial != null)
             throw new Exception("Name already registered");
         
         var allTutorials = await _tutorialData.getAllAsync();
@@ -30,7 +27,7 @@ public class TutorialDomain : ITutorialDomain
 
     public async Task<Boolean> UpdateAsync(Tutorial data,int id)
     {
-        var TutuorialExts = await _tutorialData.GetByIdAsync(id);
+        var existingTutorial = await _tutorialData.GetByIdAsync(id);
 
        /* if (TutuorialExts.Description != data.Description)
             throw new Exception("Update description is not allowed");*/

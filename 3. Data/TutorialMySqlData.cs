@@ -13,7 +13,7 @@ public class TutorialMySqlData :ITutorialData
     {
         _learningCenterDbContext = learningCenterDbContext;
     }
-    public async Task<Boolean> SaveAsync(Tutorial data)
+    public async Task<int> SaveAsync(Tutorial data)
     {
         data.IsActive = true;
     
@@ -34,7 +34,7 @@ public class TutorialMySqlData :ITutorialData
         }
    
 
-        return true;
+        return data.Id;
     }
 
     public async Task<Boolean> UpdateAsync(Tutorial data,int id)

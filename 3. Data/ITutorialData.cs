@@ -5,7 +5,7 @@ namespace _3._Data;
 
 public interface ITutorialData
 {
-    Task<Boolean> SaveAsync(Tutorial data);
+    Task<int> SaveAsync(Tutorial data);
     Task<Boolean> UpdateAsync(Tutorial data,int id);
     Task<Boolean> DeleteAsync(int id);
     Task<List<Tutorial>> getAllAsync();

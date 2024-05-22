@@ -32,19 +32,18 @@ namespace _1.API.Controllers
         [HttpGet]
         public async Task<IActionResult>  GetAsync()
         {
-            //TutorialOracleData tutorialMySqlData = new TutorialOracleData();
-            
             var data = await _tutorialData.getAllAsync();
             var result = _mapper.Map<List<Tutorial>,List<TutorialResponse>>(data);
             return Ok(result);
         }
-
+        
         // GET: api/Tutorial/5
         [HttpGet("{id}", Name = "Get")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> GetAsync(int id)
         {
             var data = await _tutorialData.GetByIdAsync(id);
             var result = _mapper.Map<Tutorial,TutorialResponse>(data);
+            
             return Ok(result);
         }
 
@@ -52,26 +51,19 @@ namespace _1.API.Controllers
         [HttpPost]
         public async Task<IActionResult> PostAsync([FromBody] TutorialRequest  data)
         {
-           /* var tutorial = new Tutorial()
-            {
-                Name = data.Name,
-                Description = data.Description
-            };*/
-
            try
            {
-
+               if (!ModelState.IsValid) throw new FormatException();
+               
                var tutorial = _mapper.Map<TutorialRequest, Tutorial>(data);
-
+               
                var result = await _tutorialDomain.SaveAsync(tutorial);
 
                return Ok(result);
            }
            catch (Exception ex)
            {
-               //ex // detalle técnico 
                //loggear txt,base,cloud 
-
                return StatusCode(StatusCodes.Status500InternalServerError,ex.Message);
            }
         }
@@ -80,11 +72,21 @@ namespace _1.API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult>  Put(int id, [FromBody] TutorialRequest  data)
         {
-            var tutorial = _mapper.Map<TutorialRequest, Tutorial>(data);
-           
-            var result = await _tutorialDomain.UpdateAsync(tutorial,id);
+            try
+            {
+                if (!ModelState.IsValid) throw new FormatException();
 
-            return Ok(result);
+                var tutorial = _mapper.Map<TutorialRequest, Tutorial>(data);
+
+                var result = await _tutorialDomain.UpdateAsync(tutorial, id);
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                //loggear txt,base,cloud 
+                return StatusCode(StatusCodes.Status500InternalServerError,ex.Message);
+            }
         }
 
         // DELETE: api/Tutorial/5
