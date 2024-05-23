@@ -80,6 +80,13 @@ public class TutorialMySqlData :ITutorialData
                                 .Include(t=> t.Sections).ToListAsync();
     }
 
+    public async Task<List<Tutorial>> getSearchedAsync(string name, string description, int? year)
+    {
+        return await _learningCenterDbContext.Tutorials
+            .Where(t =>t.IsActive && t.Name.Contains(name) && t.Year >= year )
+            .Include(t=> t.Sections).ToListAsync();
+    }
+
     public async Task<Tutorial> GetByIdAsync(int Id)
     {
         return await _learningCenterDbContext.Tutorials.Where(t =>t.IsActive && t.Id==Id)
@@ -88,6 +95,8 @@ public class TutorialMySqlData :ITutorialData
 
     public async Task<Tutorial> GetByNameAsync(string Name)
     {
-        return await _learningCenterDbContext.Tutorials.Where(t => t.IsActive && t.Name==Name).FirstOrDefaultAsync();
+        return await _learningCenterDbContext.Tutorials.
+                Where(t => t.IsActive && t.Name==Name)
+            .FirstOrDefaultAsync();
     }
 }

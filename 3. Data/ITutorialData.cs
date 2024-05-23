@@ -9,6 +9,7 @@ public interface ITutorialData
     Task<Boolean> UpdateAsync(Tutorial data,int id);
     Task<Boolean> DeleteAsync(int id);
     Task<List<Tutorial>> getAllAsync();
+    Task<List<Tutorial>> getSearchedAsync(string name , string description, int? year);
     Task<Tutorial> GetByIdAsync(int Id);    
     Task<Tutorial> GetByNameAsync(string Name);
 }

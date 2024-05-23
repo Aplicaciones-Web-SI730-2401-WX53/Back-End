@@ -37,6 +37,16 @@ namespace _1.API.Controllers
             return Ok(result);
         }
         
+        [HttpGet]
+        [Route("Search")]
+        
+        public async Task<IActionResult>  GetSearchAsync(string? name , string? description, int? year)
+        {
+            var data = await _tutorialData.getSearchedAsync(name,description,year);
+            var result = _mapper.Map<List<Tutorial>,List<TutorialResponse>>(data);
+            return Ok(result);
+        }
+        
         // GET: api/Tutorial/5
         [HttpGet("{id}", Name = "Get")]
         public async Task<IActionResult> GetAsync(int id)

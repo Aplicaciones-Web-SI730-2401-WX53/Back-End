@@ -2,5 +2,5 @@
 
 public static class CONSTANTS
 {
-  public  static int MAX_TUTORIALS = 6;
+  public  static int MAX_TUTORIALS = 100;
 }
