@@ -22,7 +22,7 @@ public class TutorialMySqlData :ITutorialData
             try
             {
                 _learningCenterDbContext.Tutorials.Add(data);
-                _learningCenterDbContext.Sections.AddRange(data.Sections); /// BBDD cae
+                //_learningCenterDbContext.Sections.AddRange(data.Sections); /// BBDD cae
                 await _learningCenterDbContext.SaveChangesAsync();
                 await transaction.CommitAsync();
             }

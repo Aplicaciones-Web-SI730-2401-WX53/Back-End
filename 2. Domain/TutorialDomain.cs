@@ -13,6 +13,9 @@ public class TutorialDomain : ITutorialDomain
     }
     public async Task<int> SaveAsync(Tutorial data)
     {
+        if (data.Name == "" ) throw new Exception("Name is empty");
+        if(data.Year > 1990 )throw new Exception("year have tobe mor than 1990");
+        
         //Bussiness rules
         var existingTutorial = await _tutorialData.GetByNameAsync(data.Name);
         if (existingTutorial != null)

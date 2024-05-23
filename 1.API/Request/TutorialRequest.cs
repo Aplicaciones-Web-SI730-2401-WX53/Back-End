@@ -16,7 +16,7 @@ public class TutorialRequest
     [Range(1990,2024)]
     public int Year { get; set; }
     
-    [Range(1, Int32.MaxValue)]
+    [Range(1, 100)]
     public int Quantity { get; set; }
     
     public List<SectionRequest> Sections { get; set; }

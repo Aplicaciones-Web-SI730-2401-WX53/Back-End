@@ -10,6 +10,7 @@ using _3._Data.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace _1.API.Controllers
 {
@@ -39,11 +40,13 @@ namespace _1.API.Controllers
         
         [HttpGet]
         [Route("Search")]
-        
         public async Task<IActionResult>  GetSearchAsync(string? name , string? description, int? year)
         {
             var data = await _tutorialData.getSearchedAsync(name,description,year);
             var result = _mapper.Map<List<Tutorial>,List<TutorialResponse>>(data);
+            
+            if (result.Count() == 0) return NotFound();
+            
             return Ok(result);
         }
         
@@ -53,6 +56,8 @@ namespace _1.API.Controllers
         {
             var data = await _tutorialData.GetByIdAsync(id);
             var result = _mapper.Map<Tutorial,TutorialResponse>(data);
+
+            if (result == null) return NotFound();
             
             return Ok(result);
         }
@@ -63,13 +68,14 @@ namespace _1.API.Controllers
         {
            try
            {
-               if (!ModelState.IsValid) throw new FormatException();
+               if (!ModelState.IsValid) return BadRequest();
                
                var tutorial = _mapper.Map<TutorialRequest, Tutorial>(data);
                
                var result = await _tutorialDomain.SaveAsync(tutorial);
 
-               return Ok(result);
+               //TODO
+               return Created("api/Tutorial", result);
            }
            catch (Exception ex)
            {
