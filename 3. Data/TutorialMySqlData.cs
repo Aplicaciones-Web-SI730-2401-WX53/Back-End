@@ -76,18 +76,14 @@ public class TutorialMySqlData :ITutorialData
 
     public async Task<List<Tutorial>> getAllAsync()
     {
-        /*var list = new List<Tutorial>();
-        
-        list.Add(new Tutorial(){Name = "Tutrial 1 Mysql"});
-        list.Add(new Tutorial(){Name = "Tutrial 2 Mysql"});
-        list.Add(new Tutorial(){Name = "Tutrial 3 Mysql"});*/
-
-        return await _learningCenterDbContext.Tutorials.Where(t =>t.IsActive).ToListAsync();
+        return await _learningCenterDbContext.Tutorials.Where(t =>t.IsActive)
+                                .Include(t=> t.Sections).ToListAsync();
     }
 
     public async Task<Tutorial> GetByIdAsync(int Id)
     {
-        return await _learningCenterDbContext.Tutorials.Where(t =>t.IsActive && t.Id==Id).FirstOrDefaultAsync();
+        return await _learningCenterDbContext.Tutorials.Where(t =>t.IsActive && t.Id==Id)
+            .Include(t=>t.Sections).FirstOrDefaultAsync();
     }
 
     public async Task<Tutorial> GetByNameAsync(string Name)
