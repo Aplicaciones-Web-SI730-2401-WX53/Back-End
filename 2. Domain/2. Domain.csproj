@@ -8,12 +8,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\3. Data\3. Data.csproj" />
-      <ProjectReference Include="..\4. Shared\4. Shared.csproj" />
+        <ProjectReference Include="..\3. Data\3. Data.csproj"/>
+        <ProjectReference Include="..\4. Shared\4. Shared.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1"/>
     </ItemGroup>
 
 </Project>

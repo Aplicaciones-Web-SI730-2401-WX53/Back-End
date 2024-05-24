@@ -11,6 +11,5 @@ public class Tutorial : BaseModel
     public int Year { get; set; }
     
     public int Quantity { get; set; }
-    public List<Section> Sections { get; set; } //0 to  many
-    //private Section Sections { get; set; } // 1 - 1
+    public List<Section> Sections { get; set; } 
 }

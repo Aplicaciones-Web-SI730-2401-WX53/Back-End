@@ -73,8 +73,7 @@ namespace _1.API.Controllers
                var tutorial = _mapper.Map<TutorialRequest, Tutorial>(data);
                
                var result = await _tutorialDomain.SaveAsync(tutorial);
-
-               //TODO
+               
                return Created("api/Tutorial", result);
            }
            catch (Exception ex)

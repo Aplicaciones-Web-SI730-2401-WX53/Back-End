@@ -13,17 +13,14 @@ public class TutorialDomain : ITutorialDomain
     }
     public async Task<int> SaveAsync(Tutorial data)
     {
-        if (data.Name == "" ) throw new Exception("Name is empty");
-        if(data.Year > 1990 )throw new Exception("year have tobe mor than 1990");
-        
         //Bussiness rules
         var existingTutorial = await _tutorialData.GetByNameAsync(data.Name);
         if (existingTutorial != null)
-            throw new Exception("Name already registered");
+            throw new Exception("Tutorial already exists");
         
         var allTutorials = await _tutorialData.getAllAsync();
         if (allTutorials.Count() >= CONSTANTS.MAX_TUTORIALS)
-            throw new Exception("limited achived");
+            throw new Exception("Max tutorials reached");
         
         return await _tutorialData.SaveAsync(data);
     }
@@ -32,16 +29,19 @@ public class TutorialDomain : ITutorialDomain
     {
         var existingTutorial = await _tutorialData.GetByIdAsync(id);
 
-       /* if (TutuorialExts.Description != data.Description)
-            throw new Exception("Update description is not allowed");*/
+        if (existingTutorial.Description != data.Description)
+           throw new Exception("Description can't be changed");
         
-        //Bussiness rules
         return  await _tutorialData.UpdateAsync(data,id);
     }
 
     public  async Task<Boolean> DeleteAsync(int id)
     {
         //Bussiness rules
+        var existingTutorial = await _tutorialData.GetByIdAsync(id);
+        if (existingTutorial == null)
+            throw new Exception("Tutorial not found");
+        
         return await _tutorialData.DeleteAsync(id);
     }
 }
