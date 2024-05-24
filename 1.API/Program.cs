@@ -1,7 +1,6 @@
 using _1.API.Mapper;
 using _2._Domain;
 using _3._Data;
-using _1.API.Mapper;
 using _3._Data.Context;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,8 +19,8 @@ builder.Services.AddScoped<ITutorialData, TutorialMySqlData>();
 builder.Services.AddScoped<ITutorialDomain, TutorialDomain>();
 
 builder.Services.AddAutoMapper(typeof(RequestToModel)
-    ,typeof(ModelToRequest)
-    ,typeof(ModelToResponse));
+    , typeof(ModelToRequest)
+    , typeof(ModelToResponse));
 
 
 // Connect DB
@@ -52,8 +51,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-
 
 
 app.UseHttpsRedirection();

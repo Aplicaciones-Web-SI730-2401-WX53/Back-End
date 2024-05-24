@@ -12,6 +12,4 @@ public class RequestToModel : Profile
         CreateMap<TutorialRequest, Tutorial>();
         CreateMap<SectionRequest, Section>();
     }
-    
-    
 }

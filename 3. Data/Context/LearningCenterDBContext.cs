@@ -1,4 +1,3 @@
-using System.Collections.Specialized;
 using _3._Data.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,14 +7,12 @@ public class LearningCenterDBContext : DbContext
 {
     public LearningCenterDBContext()
     {
-        
     }
 
     public LearningCenterDBContext(DbContextOptions<LearningCenterDBContext> options) : base(options)
     {
-        
     }
-    
+
     public DbSet<Tutorial> Tutorials { get; set; }
     public DbSet<Section> Sections { get; set; }
 
@@ -32,10 +29,9 @@ public class LearningCenterDBContext : DbContext
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-        
+
         builder.Entity<Tutorial>().ToTable("Tutorial");
-        
+
         builder.Entity<Section>().ToTable("Section");
     }
-    
 }

@@ -8,6 +8,6 @@ public class ModelToRequest : Profile
 {
     public ModelToRequest()
     {
-        CreateMap<Tutorial,TutorialRequest>();
+        CreateMap<Tutorial, TutorialRequest>();
     }
 }

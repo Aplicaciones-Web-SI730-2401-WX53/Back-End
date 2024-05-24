@@ -4,6 +4,5 @@ namespace _1.API.Request;
 
 public class SectionRequest
 {
-    [Required]
-    public string Title { get; set; }
+    [Required] public string Title { get; set; }
 }
