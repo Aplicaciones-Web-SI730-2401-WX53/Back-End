@@ -33,4 +33,51 @@ public class TutorialDomainTest
         //Assert
         Assert.Equal(1, result.Id);
     }
+    
+    [Fact]
+    public void DeleteAsync_ValidId_ReturnsTrue()
+    {
+        //Arrage
+        Tutorial tutorial = new Tutorial()
+        {
+            Id = 1,
+            Name = "Tutorial 1",
+            Description = "Description 1"
+        };
+        
+        var tutorialDataMock = new Mock<ITutorialData>();
+        tutorialDataMock.Setup(t => t.GetByIdAsync(tutorial.Id)).ReturnsAsync(tutorial);
+        tutorialDataMock.Setup(t => t.DeleteAsync(tutorial.Id)).ReturnsAsync(true);
+        
+        TutorialDomain tutorialDomain = new TutorialDomain(tutorialDataMock.Object);
+        
+        //Act
+        var result=  tutorialDomain.DeleteAsync(tutorial.Id);
+        
+        //Assert
+        Assert.Equal(true,result.Result);
+    } 
+    
+    [Fact]
+    public void DeleteAsync_InvalidId_ReturnsFalse()
+    {
+        //Arrage
+        Tutorial tutorial = new Tutorial()
+        {
+            Id = 0,
+            Name = "Tutorial 1",
+            Description = "Description 1"
+        };
+        
+        var tutorialDataMock = new Mock<ITutorialData>();
+        tutorialDataMock.Setup(t => t.GetByIdAsync(tutorial.Id)).ReturnsAsync((Tutorial)null);
+        
+        TutorialDomain tutorialDomain = new TutorialDomain(tutorialDataMock.Object);
+        
+        //Act
+        var result=  tutorialDomain.DeleteAsync(tutorial.Id);
+        
+        //Assert
+        Assert.ThrowsAsync<Exception>(async () => await tutorialDomain.DeleteAsync(tutorial.Id));
+    }
 }
