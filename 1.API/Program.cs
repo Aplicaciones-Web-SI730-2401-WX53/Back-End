@@ -1,3 +1,4 @@
+using _1.API.Extensions.Middlewares;
 using _1.API.Mapper;
 using _2._Domain;
 using _3._Data;
@@ -5,6 +6,8 @@ using _3._Data.Context;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
 
 // Add services to the container.
 
@@ -34,8 +37,9 @@ builder.Services.AddDbContext<LearningCenterDBContext>(
         );
     });
 
-
 var app = builder.Build();
+
+app.UseMiddleware<ErrorHandlingMiddleware>();
 
 //EF
 using (var scope = app.Services.CreateScope())

@@ -61,29 +61,19 @@ public class TutorialController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> PostAsync([FromBody] TutorialRequest data)
     {
-        try
-        {
-            if (!ModelState.IsValid) return BadRequest();
+            if (!ModelState.IsValid) throw new  ArgumentException();
 
             var tutorial = _mapper.Map<TutorialRequest, Tutorial>(data);
 
             var result = await _tutorialDomain.SaveAsync(tutorial);
 
             return Created("api/Tutorial", result);
-        }
-        catch (Exception ex)
-        {
-            //loggear txt,base,cloud 
-            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-        }
     }
 
     // PUT: api/Tutorial/5
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, [FromBody] TutorialRequest data)
     {
-        try
-        {
             if (!ModelState.IsValid) throw new FormatException();
 
             var tutorial = _mapper.Map<TutorialRequest, Tutorial>(data);
@@ -91,12 +81,6 @@ public class TutorialController : ControllerBase
             var result = await _tutorialDomain.UpdateAsync(tutorial, id);
 
             return Ok(result);
-        }
-        catch (Exception ex)
-        {
-            //loggear txt,base,cloud 
-            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-        }
     }
 
     // DELETE: api/Tutorial/5

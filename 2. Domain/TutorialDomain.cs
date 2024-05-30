@@ -1,3 +1,4 @@
+using System.Data;
 using _3._Data;
 using _3._Data.Models;
 using _4._Shared;
@@ -18,11 +19,11 @@ public class TutorialDomain : ITutorialDomain
         //Bussiness rules
         var existingTutorial = await _tutorialData.GetByNameAsync(data.Name);
         if (existingTutorial != null)
-            throw new Exception("Tutorial already exists");
+            throw new  ConstraintException("Tutorial already exists");
 
         var allTutorials = await _tutorialData.getAllAsync();
-        if (allTutorials.Count() >= CONSTANTS.MAX_TUTORIALS)
-            throw new Exception("Max tutorials reached");
+        if (allTutorials.Count >= CONSTANTS.MAX_TUTORIALS)
+            throw new ConstraintException("Max tutorials reached");
 
         return await _tutorialData.SaveAsync(data);
     }
@@ -32,7 +33,7 @@ public class TutorialDomain : ITutorialDomain
         var existingTutorial = await _tutorialData.GetByIdAsync(id);
 
         if (existingTutorial.Description != data.Description)
-            throw new Exception("Description can't be changed");
+            throw new DuplicateNameException("Description can't be changed");
 
         return await _tutorialData.UpdateAsync(data, id);
     }
@@ -42,7 +43,7 @@ public class TutorialDomain : ITutorialDomain
         //Bussiness rules
         var existingTutorial = await _tutorialData.GetByIdAsync(id);
         if (existingTutorial == null)
-            throw new Exception("Tutorial not found");
+            throw new ConstraintException("Tutorial not found");
 
         return await _tutorialData.DeleteAsync(id);
     }
