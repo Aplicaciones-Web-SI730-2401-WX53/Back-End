@@ -29,6 +29,7 @@ public class TutorialController : ControllerBase
     {
         var data = await _tutorialData.getAllAsync();
         var result = _mapper.Map<List<Tutorial>, List<TutorialResponse>>(data);
+        if (result.Count == 0) return NotFound();
         return Ok(result);
     }
 
@@ -39,7 +40,7 @@ public class TutorialController : ControllerBase
         var data = await _tutorialData.getSearchedAsync(name, description, year);
         var result = _mapper.Map<List<Tutorial>, List<TutorialResponse>>(data);
 
-        if (result.Count() == 0) return NotFound();
+        if (result.Count == 0) return NotFound();
 
         return Ok(result);
     }
